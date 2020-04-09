@@ -52,6 +52,14 @@ thead > tr > th {
   font-weight: bold !important;
 }
 
-.MuiButtonT {
-  color: green;
+.MuiSwitch-colorPrimary.Mui-checked {
+  color: darkorchid !important;
+}
+
+.MuiSwitch-colorPrimary.Mui-checked + .MuiSwitch-track {
+  background-color: darkorchid !important;
+}
+
+.MuiSwitch-colorPrimary.Mui-checked:hover {
+  background-color: rgba(153, 50, 204, 0.25) !important;
 }

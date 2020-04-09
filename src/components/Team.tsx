@@ -15,6 +15,8 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { testData } from "../test-data";
 import { makeStyles } from "@material-ui/core/styles";
 import AppHeader from "./AppHeader";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 
 const useStyles = makeStyles((theme) => ({
   teamName: {
@@ -40,6 +42,10 @@ const useStyles = makeStyles((theme) => ({
 function Team() {
   const classes = useStyles();
 
+  const statMethodChanged = () => {
+    console.log("blah");
+  };
+
   return (
     <Paper style={{ height: "100%" }}>
       <AppHeader />
@@ -61,17 +67,26 @@ function Team() {
               groupedContainedPrimary: classes.buttonGroupPrimary,
             }}
           >
-            <Button>Batters</Button>
-            <Button>Pitchers</Button>
+            <Button disableRipple>Batters</Button>
+            <Button disableRipple>Pitchers</Button>
           </ButtonGroup>
-          <ToggleButtonGroup exclusive aria-label="text alignment">
+          {/* <ToggleButtonGroup
+            exclusive
+            onChange={statMethodChanged}
+            aria-label="text alignment"
+          >
             <ToggleButton value="totals" aria-label="totals">
               Stat Totals
             </ToggleButton>
             <ToggleButton value="averages" aria-label="averages">
               Stats Per At Bat
             </ToggleButton>
-          </ToggleButtonGroup>
+          </ToggleButtonGroup> */}
+          <FormControlLabel
+            style={{ float: "right", marginRight: "5%" }}
+            control={<Switch color="primary" name="averagesOn" />}
+            label="Show Stats Per AB"
+          />
         </div>
         <Paper variant="outlined" className={classes.grid}>
           <Table aria-label="simple table">
