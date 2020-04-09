@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+th,
+td {
+  color: lightslategray !important;
+}
+
+thead > tr > th {
+  font-weight: bold !important;
+}
+
+.MuiButtonT {
+  color: green;
+}
