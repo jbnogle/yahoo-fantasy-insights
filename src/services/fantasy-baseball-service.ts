@@ -9,3 +9,13 @@ export async function getLeaguePrefix() {
     console.error(`Error in getLeaguePrefix(): ${err}`);
   }
 }
+
+export async function getTeamPlayers(teamId: string) {
+  try {
+    const resp = await fetch(`/teams/${teamId}/players`);
+    const jsonObj = await resp.json();
+    return jsonObj.data;
+  } catch (err) {
+    console.error(`Error in getTeamPlayers: ${err}`);
+  }
+}

@@ -1,4 +1,4 @@
-export const testData = [
+const testData = [
   {
     name: "Willson Contreras",
     position: "C",
@@ -450,3 +450,5 @@ export const testData = [
     qualityStarts: 10,
   },
 ];
+
+module.exports = { testData };

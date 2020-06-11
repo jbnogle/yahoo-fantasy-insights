@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -9,11 +9,11 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import { testData } from "../test-data-juiced-balls";
 import { makeStyles } from "@material-ui/core/styles";
 import AppHeader from "./AppHeader";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import { getTeamPlayers } from "../services/fantasy-baseball-service";
 
 const useStyles = makeStyles((theme) => ({
   teamName: {
@@ -73,7 +73,17 @@ function Team() {
   const [playerDisplayType, setPlayerDisplayType] = useState(
     PlayerDisplayType.Batters
   );
-  const [playerStats, setPlayerStats] = useState(testData as PlayerStats[]);
+  const [playerStatsMaster, setPlayerStatsMaster] = useState<PlayerStats[]>([]);
+  const [playerStatsDisplayed, setPlayerStatsDisplayed] = useState<
+    PlayerStats[]
+  >([]);
+
+  useEffect(() => {
+    getTeamPlayers("juiced-balls").then((playerData) => {
+      setPlayerStatsMaster(playerData as PlayerStats[]);
+      setPlayerStatsDisplayed(playerData as PlayerStats[]);
+    });
+  }, []);
 
   const displayBatters = () => {
     setPlayerDisplayType(PlayerDisplayType.Batters);
@@ -84,9 +94,10 @@ function Team() {
   };
 
   const toggleStatsPerUnit = (event: any) => {
-    if (event.target.checked) setPlayerStats(calculatePerUnitStats(testData));
+    if (event.target.checked)
+      setPlayerStatsDisplayed(calculatePerUnitStats(playerStatsMaster));
     else {
-      setPlayerStats(testData);
+      setPlayerStatsDisplayed(playerStatsMaster);
     }
   };
 
@@ -199,7 +210,7 @@ function Team() {
             </TableHead>
             <TableBody>
               {playerDisplayType === PlayerDisplayType.Batters
-                ? playerStats
+                ? playerStatsDisplayed
                     .filter((player) => {
                       return (
                         player.position !== "SP" && player.position !== "RP"
@@ -223,7 +234,7 @@ function Team() {
                         <TableCell align="right">{player.slg}</TableCell>
                       </TableRow>
                     ))
-                : playerStats
+                : playerStatsDisplayed
                     .filter((player) => {
                       return (
                         player.position === "SP" || player.position === "RP"
